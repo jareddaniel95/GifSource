@@ -6,16 +6,35 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
-  <title>Scorecard</title>
+  <title>GifSource</title>
 </head>
 
 <body class="min-100-vh flex-column bg-light">
   <header class="p-5 text-center text-white bg-primary">
-    <h1>Scorecard</h1>
+    <h1>GifSource</h1>
   </header>
-  <main class="flex-row justify-center align-center col-auto p-4">
-
+  <main id="main" class="d-flex flex-wrap justify-content-center align-center col-auto p-4 h-100">
+    <div id="sidebar" class="w-25 p-2 container-fluid border">
+      <div class="row">
+        <div class="col">
+          <h2>Search for a Gif:</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <input type="text" class="input-lg w-100 p-2 my-2" name="input" placeholder="Search for a gif" />
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <button id="search" class="btn btn-block btn-primary">Search</button>
+        </div>
+      </div>
+    </div>
+    <div id="content" class="w-67 p-2"></div>
   </main>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="./assets/js/script.js"></script>
 </body>
 
