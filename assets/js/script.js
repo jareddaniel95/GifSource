@@ -10,11 +10,13 @@ var buttonSearch = $('#search');
 buttonSearch.on('click', async function() {
     var inputWords = searchField.val().split(' ');
     var firstGiphyResponse = await getGifsFromWord(searchField.val());
-    var giphyResponses = [];
+    var standardGiphyResponse = null;
+    var altGiphyResponses = [];
     console.log(searchField.val());
     console.log(firstGiphyResponse);
     if (firstGiphyResponse != null && firstGiphyResponse.data != null && firstGiphyResponse.data.length > 0) {
-        giphyResponses.push(firstGiphyResponse.data);
+        // standardGiphyResponses.push(firstGiphyResponse.data);
+        standardGiphyResponse = firstGiphyResponse.data;
     }
     console.log("data length: " + firstGiphyResponse.data.length);
     console.log("input length: " + searchField.val().split(' ').length);
@@ -24,10 +26,11 @@ buttonSearch.on('click', async function() {
         if (wordsResponse != null) {
             var synonyms = wordsResponse.synonyms;
             for (var i = 0; i < Math.min(synonyms.length, 10); ++i) {
-                var giphyResponse = await getGifsFromWord(synonyms[i]);
+                var giphyResponse = await translateWordToGif(synonyms[i]);
                 console.log(giphyResponse);
-                if (giphyResponse != null && giphyResponse.data != null && giphyResponse.data.length > 0) {
-                    giphyResponses.push(giphyResponse.data);
+                if (giphyResponse != null && giphyResponse.data != null) {
+                    //standardGiphyResponses.push(giphyResponse.data);
+                    altGiphyResponses.push(giphyResponse.data);
                 }
             }
         }
@@ -57,12 +60,12 @@ buttonSearch.on('click', async function() {
                             }
                         }
                         // var giphyResponse = await getGifsFromWord(`${synonyms[i]} ${inputWords[k]}`);
-                        var giphyResponse = await getGifsFromWord(query.trim());
+                        var giphyResponse = await translateWordToGif(query.trim());
                         // console.log(synonyms[i] + " " + inputWords[k]);
                         console.log(query);
                         console.log(giphyResponse);
-                        if (giphyResponse != null && giphyResponse.data != null && giphyResponse.data.length > 0) {
-                            giphyResponses.push(giphyResponse.data);
+                        if (giphyResponse != null && giphyResponse.data != null) {
+                            altGiphyResponses.push(giphyResponse.data.images);
                         }
                     }
                 }
@@ -73,11 +76,19 @@ buttonSearch.on('click', async function() {
     else {
         console.log("Nothing here");
     }
-    console.log(giphyResponses);
+    console.log(altGiphyResponses);
     content.empty();
-    for (var i = 0; i < giphyResponses.length; ++i) {
+
+    for (var i = 0; i < standardGiphyResponse.length; ++i) {
         var gif = $('<img>');
-        gif.attr('src', giphyResponses[i][0].images.fixed_height.url);
+        gif.attr('src', standardGiphyResponse[i].images.fixed_height.url);
+        gif.attr('alt', `Result ${i}`);
+        content.append(gif);
+    }
+
+    for (var i = 0; i < altGiphyResponses.length; ++i) {
+        var gif = $('<img>');
+        gif.attr('src', altGiphyResponses[i].fixed_height.url);
         gif.attr('alt', `Result ${i}`);
         content.append(gif);
     }
@@ -101,7 +112,7 @@ async function getSimilarWords(input) {
 }
 
 async function getGifsFromWord(input) {
-    var gihpyQuery = `https://api.giphy.com/v1/gifs/search?api_key=${gihpyAPIkey}&q=${input}`;
+    var gihpyQuery = `https://api.giphy.com/v1/gifs/search?api_key=${gihpyAPIkey}&q=${input}&limit=10`;
     let result = fetch(gihpyQuery)
         .then(function (response) {
             if (response.ok) {
