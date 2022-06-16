@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
   <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
   <title>GifSource</title>
-</head>
-
-<body class="min-100-vh flex-column bg-light">
-  <header class="p-5 text-center text-white bg-primary">
-    <h1>GifSource</h1>
-  </header>
-  <main id="main" class="d-flex flex-wrap justify-content-center align-center col-auto p-4 h-100">
-    <div id="sidebar" class="w-25 p-2 container-fluid border">
-      <div class="row">
-        <div class="col">
-          <h2>Search for a Gif:</h2>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GifSource</title>
+    </head>
+<body>
+  <div>
+      <div>
+        <div id = Searchbox class = text-center>
+          
+            <input id=searchbar type="text" class="input-lg w-50 p-2 my-2 " name="input" placeholder="Search for a gif" />
+         
+            <button id="search" class="btn btn-block btn-primary w-50 ">Search</button>
+                            
+          </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <input type="text" class="input-lg w-100 p-2 my-2" name="input" placeholder="Search for a gif" />
+    <div id = "recent">
+      Past Searches
+        <div>
+          <ul> Recent Search 1</ul>
+          <ul> Recent Search 2</ul>
+          <ul> Recent Search 3</ul>
+          <ul> Recent Search 4</ul>
         </div>
-      </div>
-      <div class="row">
-        <div class="col">
-          <button id="search" class="btn btn-block btn-primary">Search</button>
-        </div>
-      </div>
     </div>
-    <div id="content" class="w-67 p-2"></div>
-  </main>
-  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
-  <script src="./assets/js/script.js"></script>
+    <div>
+        <div id="content" class="w-67 p-2"></div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    <script src="./assets/js/script.js"></script>
+  </div>
 </body>
-
 </html>

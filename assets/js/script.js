@@ -15,7 +15,6 @@ buttonSearch.on('click', async function() {
     console.log(searchField.val());
     console.log(firstGiphyResponse);
     if (firstGiphyResponse != null && firstGiphyResponse.data != null && firstGiphyResponse.data.length > 0) {
-        // standardGiphyResponses.push(firstGiphyResponse.data);
         standardGiphyResponse = firstGiphyResponse.data;
     }
     console.log("data length: " + firstGiphyResponse.data.length);
@@ -29,7 +28,6 @@ buttonSearch.on('click', async function() {
                 var giphyResponse = await translateWordToGif(synonyms[i]);
                 console.log(giphyResponse);
                 if (giphyResponse != null && giphyResponse.data != null) {
-                    //standardGiphyResponses.push(giphyResponse.data);
                     altGiphyResponses.push(giphyResponse.data);
                 }
             }
@@ -39,18 +37,11 @@ buttonSearch.on('click', async function() {
     else if(inputWords.length > 1) {
         for (var k = 0; k < Math.min(inputWords.length, 4); ++k) {
             if (!synonymBlacklist.includes(inputWords[k])) {
-            // Search original word
-                // var firstGiphyResponse = await getGifsFromWord(inputWords[k]);
-                // if (firstGiphyResponse != null && firstGiphyResponse.data != null && firstGiphyResponse.data.length > 0) {
-                //     giphyResponses.push(firstGiphyResponse.data);
-                // }
-            
                 // Search synonyms
                 var wordsResponse = await getSimilarWords(inputWords[k]);
                 if (wordsResponse != null) {
                     var synonyms = wordsResponse.synonyms;
                     for (var i = 0; i < Math.min(synonyms.length, Math.max(6 - inputWords.length, 2)); ++i) {
-                        //var query = inputWords.join(' ');
                         var query = '';
                         for (var j = 0; j < inputWords.length; ++j) {
                             if (j == k) {
@@ -59,9 +50,7 @@ buttonSearch.on('click', async function() {
                                 query += inputWords[j] + ' ';
                             }
                         }
-                        // var giphyResponse = await getGifsFromWord(`${synonyms[i]} ${inputWords[k]}`);
                         var giphyResponse = await translateWordToGif(query.trim());
-                        // console.log(synonyms[i] + " " + inputWords[k]);
                         console.log(query);
                         console.log(giphyResponse);
                         if (giphyResponse != null && giphyResponse.data != null) {
