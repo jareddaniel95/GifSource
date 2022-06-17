@@ -12,34 +12,11 @@ var historyItems = $('#historyItems');
 var pastGiphyResponses = JSON.parse(localStorage.getItem("PastGiphyResponses"));
     if (pastGiphyResponses) {
         pastGiphyResponses.forEach(pastResponse => {
-            var newCol = $('<div>');
-            newCol.addClass("col");
-            var historyItem = $('<div>');
-            historyItem.attr("class", "border custom-border");
-            historyItem.attr("style", "max-width: 202px");
-            var historyName = $('<h2>');
-            historyName.attr("class", "text-center mb-0 historyHeader");
-            historyName.text(pastResponse.searchValue);
-            var historyImg = $('<img>');
-            historyImg.attr('src', pastResponse.response);
-            historyItem.append(historyImg);
-            historyItem.append(historyName);
-            // searchBox.append(historyItem);
-            newCol.append(historyItem);
-            historyItems.append(newCol);
+            addHistoryItem(pastResponse);
         })
     }
 
 buttonSearch.on('click', async function() {
-    
-    // Add history button
-    
-        // var historyButton = $('<div>');
-        // historyButton.text(searchText)
-        // historyButton.attr('class', 'btn btn-secondary py-2 px-3 mx-1 mt-3 history-button');
-        // historyButton.addClass('history-button');
-        // historyButton.text(searchField.val());
-        // searchBox.append(historyButton);
     
     // Get GIFs
     var inputWords = searchField.val().split(' ');
@@ -102,8 +79,10 @@ buttonSearch.on('click', async function() {
     console.log(altGiphyResponses);
     content.empty();
 
+    // Render Gifs
     for (var i = 0; i < standardGiphyResponse.length; ++i) {
         var gif = $('<img>');
+        gif.addClass('result-gif');
         gif.attr('src', standardGiphyResponse[i].images.fixed_height.url);
         gif.attr('alt', `Result ${i}`);
         content.append(gif);
@@ -111,6 +90,7 @@ buttonSearch.on('click', async function() {
 
     for (var i = 0; i < altGiphyResponses.length; ++i) {
         var gif = $('<img>');
+        gif.addClass('result-gif');
         gif.attr('src', altGiphyResponses[i].fixed_height.url);
         gif.attr('alt', `Result ${i}`);
         content.append(gif);
@@ -122,14 +102,36 @@ buttonSearch.on('click', async function() {
         'response': standardGiphyResponse[0].images.fixed_height_small_still.url
     }
     var list = JSON.parse(localStorage.getItem("PastGiphyResponses"));
+    console.log(list);
     if (!list) {
         list = [];
+    } else {
+        if (list.length >= 8) {
+            var removedItem = list.shift();
+            var prevSearch = $(`#historyItems div:contains(${removedItem.searchValue})`);
+            //historyItems.remove(prevSearch); // Not working?
+            prevSearch.attr('style', 'display: none;');
+        }
     }
     list.push(searchObj);
     localStorage.setItem("PastGiphyResponses", JSON.stringify(list));
-    // localStorage.setItem("PastGiphyResponses", JSON.stringify(searchObj));
+
+    addHistoryItem(searchObj);
     
 });
+
+function addHistoryItem(pastResponse) {
+    var newCol = $('<div>');
+    newCol.addClass("col");
+    newCol.attr("class", "border custom-border m-2");
+    newCol.attr("style", `width: 200px; height: 200px; display: flex; background-image: url(${pastResponse.response}); background-repeat: no-repeat; background-size: 100% 100%;`);
+    var historyName = $('<h2>');
+    historyName.attr("class", "text-center mb-0 historyHeader");
+    historyName.attr("style", "align-self: flex-end; width: 100%;");
+    historyName.text(pastResponse.searchValue);
+    newCol.append(historyName);
+    historyItems.append(newCol);
+}
 
 async function getSimilarWords(input) {
     var wordsQuery = `https://wordsapiv1.p.rapidapi.com/words/${input}/synonyms?rapidapi-key=${wordsAPIkey}`;

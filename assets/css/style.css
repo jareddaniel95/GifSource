@@ -6,6 +6,12 @@ header {
     background-color: #83e22b;
 }
 
+#content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
 .history-button {
     background-color: blueviolet;
 }
@@ -14,10 +20,9 @@ h2 {
     color: silver;
 }
 
-img {
-    width: 200px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
+.result-gif {
+    border: 1px solid white;
+    margin: 6px;
 }
 
 .custom-border {
@@ -29,4 +34,8 @@ img {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
     border-top: 1px solid white;
+}
+
+#searchbox {
+    width: 100%;
 }
