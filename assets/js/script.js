@@ -132,7 +132,7 @@ async function searchGifs() {
 
     // Save to local storage
     var searchObj = {
-        'searchValue': searchField.val(),
+        'searchValue': searchField.val().trim(),
         'response': standardGiphyResponse[0].images.fixed_height_small_still.url
     }
     var list = JSON.parse(localStorage.getItem("PastGiphyResponses"));
@@ -140,11 +140,16 @@ async function searchGifs() {
     if (!list) {
         list = [];
     } else {
+        for (var i = 0; i < list.length; ++i) {
+            if (convertToIdName(list[i].searchValue) == convertToIdName(searchObj.searchValue)) {
+                list.splice(i, 1);
+                historyItems.find(`#${convertToIdName(searchObj.searchValue)}`).remove();
+            }
+        }
+
         if (list.length >= 8) {
             var removedItem = list.shift();
-            var prevSearch = $(`#historyItems div:contains(${removedItem.searchValue})`);
-            //historyItems.remove(prevSearch); // Not working?
-            prevSearch.attr('style', 'display: none;');
+            historyItems.find(`#${convertToIdName(removedItem.searchValue)}`).remove();
         }
     }
     list.push(searchObj);
@@ -155,7 +160,8 @@ async function searchGifs() {
 
 function addHistoryItem(pastResponse) {
     var newCol = $('<div>');
-    newCol.addClass("col");
+    // newCol.addClass("col");
+    newCol.attr("id", convertToIdName(pastResponse.searchValue));
     newCol.attr("class", "custom-border m-2 hoverable");
     newCol.attr("style", `width: 200px; height: 175px; display: flex; background-image: url(${pastResponse.response}); background-repeat: no-repeat; background-size: 100% 100%;`);
     var historyName = $('<h3>');
@@ -210,4 +216,8 @@ async function translateWordToGif(input) {
             return data;
         });
     return result;
+}
+
+function convertToIdName(input) {
+    return input.trim().split(" ").join("-").toLowerCase();
 }
