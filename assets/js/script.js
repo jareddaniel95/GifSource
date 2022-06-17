@@ -6,12 +6,26 @@ var synonymBlacklist = ['a', 'an', 'the', 'is', 'to', 'on', 'or', 'as', 'at', 'i
 var content = $('#content');
 var searchField = $('input[name="input"]');
 var buttonSearch = $('#search');
+//seans local storage code
+var lastsearch = localStorage.getItem("lastsearch");
+var searchtext = localStorage.getItem("searchtext");
+var lastsearchspan = $("#search-value");
+var searchtextspan = document.querySelector("#search-text");
+var values = JSON.parse(lastsearch);
+searchtextspan.textContent =searchtext;
+if(values){ 
+for (var i = 0; i < values.data.length; ++i) {
+    var gif = $('<img>');
+    gif.attr('src', values.data[i].images.fixed_height.url);
+    gif.attr('alt', `Result ${i}`);
+    lastsearchspan.append(gif);
+}
+}
 
 buttonSearch.on('click', async function() {
     // var wordsResponse = await getSimilarWords(searchField.val());
     var firstGiphyResponse = await getGifs(searchField.val());
     var giphyResponses = [];
-    console.log(firstGiphyResponse);
     if (firstGiphyResponse != null) {
         giphyResponses.push(firstGiphyResponse.data);
     }
@@ -26,6 +40,11 @@ buttonSearch.on('click', async function() {
                 console.log(giphyResponse);
                 if (giphyResponse != null && giphyResponse.data != null && giphyResponse.data.length > 0) {
                     giphyResponses.push(giphyResponse.data);
+                    console.log(giphyResponse);
+                    // local storage variable
+                    localStorage.setItem("searchtext", searchField.val());
+                    localStorage.setItem("lastsearch", JSON.stringify(giphyResponse));
+                    
                 }
             }
         }
