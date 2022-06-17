@@ -16,6 +16,16 @@ var pastGiphyResponses = JSON.parse(localStorage.getItem("PastGiphyResponses"));
         })
     }
 
+//Press the "Enter" key inside the search field to trigger the button
+var input = document.getElementById("searchbar");
+input.addEventListener("keypress", function(event) {
+if (event.key === "Enter") {
+event.preventDefault();
+document.getElementById("search").click();
+}
+});
+
+
 buttonSearch.on('click', async function() {
     
     // Get GIFs
@@ -78,6 +88,7 @@ buttonSearch.on('click', async function() {
     }
     console.log(altGiphyResponses);
     content.empty();
+
 
     // Render Gifs
     for (var i = 0; i < standardGiphyResponse.length; ++i) {
