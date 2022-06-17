@@ -6,8 +6,34 @@ var synonymBlacklist = ['a', 'an', 'the', 'is', 'to', 'on', 'or', 'as', 'at', 'i
 var content = $('#content');
 var searchField = $('input[name="input"]');
 var buttonSearch = $('#search');
+var searchBox = $('#searchbox');
+
+var pastGiphyResponses = JSON.parse(localStorage.getItem("PastGiphyResponses"));
+    if (pastGiphyResponses) {
+        pastGiphyResponses.forEach(pastResponse => {
+            var historyItem = $('<div>');
+            var historyName = $('<h2>');
+            historyName.text(pastResponse.searchValue);
+            var historyImg = $('<img>');
+            historyImg.attr('src', pastResponse.response);
+            historyItem.append(historyImg);
+            historyItem.append(historyName);
+            searchBox.append(historyItem);
+        })
+    }
 
 buttonSearch.on('click', async function() {
+    
+    // Add history button
+    
+        // var historyButton = $('<div>');
+        // historyButton.text(searchText)
+        // historyButton.attr('class', 'btn btn-secondary py-2 px-3 mx-1 mt-3 history-button');
+        // historyButton.addClass('history-button');
+        // historyButton.text(searchField.val());
+        // searchBox.append(historyButton);
+    
+    // Get GIFs
     var inputWords = searchField.val().split(' ');
     var firstGiphyResponse = await getGifsFromWord(searchField.val());
     var standardGiphyResponse = null;
@@ -28,7 +54,7 @@ buttonSearch.on('click', async function() {
                 var giphyResponse = await translateWordToGif(synonyms[i]);
                 console.log(giphyResponse);
                 if (giphyResponse != null && giphyResponse.data != null) {
-                    altGiphyResponses.push(giphyResponse.data);
+                    altGiphyResponses.push(giphyResponse.data.images);
                 }
             }
         }
@@ -81,6 +107,19 @@ buttonSearch.on('click', async function() {
         gif.attr('alt', `Result ${i}`);
         content.append(gif);
     }
+
+    // Save to local storage
+    var searchObj = {
+        'searchValue': searchField.val(),
+        'response': standardGiphyResponse[0].images.downsized.url
+    }
+    var list = JSON.parse(localStorage.getItem("PastGiphyResponses"));
+    if (!list) {
+        list = [];
+    }
+    list.push(searchObj);
+    localStorage.setItem("PastGiphyResponses", JSON.stringify(list));
+    // localStorage.setItem("PastGiphyResponses", JSON.stringify(searchObj));
     
 });
 

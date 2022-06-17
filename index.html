@@ -12,25 +12,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GifSource</title>
     </head>
-<body>
-  <div>
-      <div>
-        <div id = Searchbox class = text-center>
-          
-            <input id=searchbar type="text" class="input-lg w-50 p-2 my-2 " name="input" placeholder="Search for a gif" />
-         
-            <button id="search" class="btn btn-block btn-primary w-50 ">Search</button>
-                            
-          </div>
+<body class="bg-dark">
+  <header class="p-4 mb-4 text-center text-light">
+    <h1>GifSource</h1>
+  </header>
+  <main>
+    <div id="searchbox" class="container">
+      <div class="row">
+        <div class="col text-center">
+          <input id="searchbar" type="text" class="input-lg w-50 p-2 my-2 " name="input" placeholder="Search for a gif" />
         </div>
-    <div id = "recent">
-      Past Searches
-        <div>
-          <ul> Recent Search 1</ul>
-          <ul> Recent Search 2</ul>
-          <ul> Recent Search 3</ul>
-          <ul> Recent Search 4</ul>
+      </div>
+      <div class="row">
+        <div class="col text-center">
+          <button id="search" class="btn btn-default w-50">Search</button>
         </div>
+      </div>
     </div>
     <div>
         <div id="content" class="w-67 p-2"></div>
@@ -38,6 +35,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
     <script src="./assets/js/script.js"></script>
-  </div>
+  </main>
 </body>
 </html>
