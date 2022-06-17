@@ -106,7 +106,7 @@ async function searchGifs() {
         link.attr('href', standardGiphyResponse[i].url);
         var gif = $('<img>');
         gif.addClass('result-gif');
-        gif.addClass()
+        gif.addClass('hoverable');
         gif.attr('src', standardGiphyResponse[i].images.fixed_height.url);
         gif.attr('alt', standardGiphyResponse[i].title);
         link.append(gif);
@@ -121,6 +121,7 @@ async function searchGifs() {
             gif.addClass('result-gif');
             gif.attr('src', altGiphyResponses[i].images.fixed_height.url);
             gif.attr('alt', altGiphyResponses[i].title);
+            gif.addClass('hoverable');
             link.append(gif);
             content.append(link);
         }
@@ -154,17 +155,16 @@ async function searchGifs() {
 }
 
 function addHistoryItem(pastResponse) {
-    var newCol = $('<div>');
-    // newCol.addClass("col");
-    newCol.attr("id", convertToIdName(pastResponse.searchValue));
-    newCol.attr("class", "custom-border m-2 hoverable");
-    newCol.attr("style", `width: 200px; height: 175px; display: flex; background-image: url(${pastResponse.response}); background-repeat: no-repeat; background-size: 100% 100%;`);
+    var newItem = $('<div>');
+    newItem.attr("id", convertToIdName(pastResponse.searchValue));
+    newItem.attr("class", "custom-border m-2 hoverable");
+    newItem.attr("style", `width: 200px; height: 175px; display: flex; background-image: url(${pastResponse.response}); background-repeat: no-repeat; background-size: 100% 100%;`);
     var historyName = $('<h3>');
     historyName.attr("class", "text-center mb-0 historyHeader");
     historyName.attr("style", "align-self: flex-end; width: 100%;");
     historyName.text(pastResponse.searchValue);
-    newCol.append(historyName);
-    historyItems.append(newCol);
+    newItem.append(historyName);
+    historyItems.append(newItem);
 }
 
 async function getSimilarWords(input) {
