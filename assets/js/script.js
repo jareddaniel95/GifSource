@@ -31,7 +31,7 @@ buttonSearch.on('click', async function() {
     console.log("data length: " + firstGiphyResponse.data.length);
     console.log("input length: " + searchField.val().split(' ').length);
     // CASE 1 - one word search
-    if (inputWords.length == 1) {
+    if (inputWords.length == 1 ) {
         var wordsResponse = await getSimilarWords(searchField.val());
         if (wordsResponse != null) {
             var synonyms = wordsResponse.synonyms;
@@ -45,7 +45,7 @@ buttonSearch.on('click', async function() {
         }
     }
     // CASE 2 - multi-word search
-    else if(inputWords.length > 1) {
+    else if(inputWords.length > 1 ) {
         for (var k = 0; k < Math.min(inputWords.length, 4); ++k) {
             if (!synonymBlacklist.includes(inputWords[k])) {
                 // Search synonyms
@@ -118,13 +118,14 @@ buttonSearch.on('click', async function() {
 
     addHistoryItem(searchObj);
     
+    
 });
 
 function addHistoryItem(pastResponse) {
     var newCol = $('<div>');
     newCol.addClass("col");
     newCol.attr("class", "border custom-border m-2");
-    newCol.attr("style", `width: 200px; height: 175px; display: flex; background-image: url(${pastResponse.response}); background-repeat: no-repeat; background-size: 100% 100%;`);
+    newCol.attr("style", `width: 100px; height: 75px; display: flex; background-image: url(${pastResponse.response}); background-repeat: no-repeat; background-size: 100% 100%;`);
     var historyName = $('<h2>');
     historyName.attr("class", "text-center mb-0 historyHeader");
     historyName.attr("style", "align-self: flex-end; width: 100%;");

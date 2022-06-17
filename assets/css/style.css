@@ -17,14 +17,17 @@ header {
 }
 
 h2 {
-    color: silver;
+    color: white;
     font-size: 20px;
-    padding: 5px;
+    padding: 0px;
+    
 }
 
 .result-gif {
     border: 1px solid white;
     margin: 6px;
+    width: 200px;
+    height: 200px;
 }
 
 .custom-border {
@@ -35,9 +38,10 @@ h2 {
     background-color: blueviolet;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    border-top: 1px solid white;
+    border-top: .1px solid white;
 }
 
 #searchbox {
     width: 100%;
 }
+
