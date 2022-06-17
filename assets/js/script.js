@@ -95,7 +95,7 @@ async function searchGifs() {
     }
     // CASE 3 - empty search
     else {
-        console.log("Nothing here");
+
     }
     loadingIcon.addClass('hide');
     searchResultsHeader.removeClass('hide');
@@ -106,6 +106,7 @@ async function searchGifs() {
         link.attr('href', standardGiphyResponse[i].url);
         var gif = $('<img>');
         gif.addClass('result-gif');
+        gif.addClass()
         gif.attr('src', standardGiphyResponse[i].images.fixed_height.url);
         gif.attr('alt', standardGiphyResponse[i].title);
         link.append(gif);
@@ -118,7 +119,6 @@ async function searchGifs() {
             link.attr('href', altGiphyResponses[i].url);
             var gif = $('<img>');
             gif.addClass('result-gif');
-            console.log(altGiphyResponses[i]);
             gif.attr('src', altGiphyResponses[i].images.fixed_height.url);
             gif.attr('alt', altGiphyResponses[i].title);
             link.append(gif);
