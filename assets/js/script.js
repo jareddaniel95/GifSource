@@ -23,7 +23,6 @@ if (pastGiphyResponses) {
 buttonSearch.on('click', searchGifs);
 
 searchField.keypress(async function(e) {
-    console.log("keypress()");
     if (e.keyCode == 13) {
         searchGifs();
     }
@@ -31,9 +30,7 @@ searchField.keypress(async function(e) {
 
 historyItems.on('click', function(event) {
     var itemClicked = $(event.target);
-    console.log(itemClicked.text());
     if (itemClicked.hasClass('custom-border')) {
-        console.log('true');
         searchField.val(itemClicked.text());
         searchGifs();
     }
@@ -54,13 +51,9 @@ async function searchGifs() {
     var firstGiphyResponse = await getGifsFromWord(searchField.val());
     var standardGiphyResponse = null;
     var altGiphyResponses = [];
-    console.log(searchField.val());
-    console.log(firstGiphyResponse);
     if (firstGiphyResponse != null && firstGiphyResponse.data != null && firstGiphyResponse.data.length > 0) {
         standardGiphyResponse = firstGiphyResponse.data;
     }
-    console.log("data length: " + firstGiphyResponse.data.length);
-    console.log("input length: " + searchField.val().split(' ').length);
     // CASE 1 - one word search
     if (inputWords.length == 1) {
         var wordsResponse = await getSimilarWords(searchField.val());
@@ -68,9 +61,8 @@ async function searchGifs() {
             var synonyms = wordsResponse.synonyms;
             for (var i = 0; i < Math.min(synonyms.length, 10); ++i) {
                 var giphyResponse = await translateWordToGif(synonyms[i]);
-                console.log(giphyResponse);
                 if (giphyResponse != null && giphyResponse.data != null) {
-                    altGiphyResponses.push(giphyResponse.data.images);
+                    altGiphyResponses.push(giphyResponse.data);
                 }
             }
         }
@@ -93,10 +85,8 @@ async function searchGifs() {
                             }
                         }
                         var giphyResponse = await translateWordToGif(query.trim());
-                        console.log(query);
-                        console.log(giphyResponse);
                         if (giphyResponse != null && giphyResponse.data != null) {
-                            altGiphyResponses.push(giphyResponse.data.images);
+                            altGiphyResponses.push(giphyResponse.data);
                         }
                     }
                 }
@@ -107,26 +97,32 @@ async function searchGifs() {
     else {
         console.log("Nothing here");
     }
-    console.log(altGiphyResponses);
     loadingIcon.addClass('hide');
     searchResultsHeader.removeClass('hide');
 
     // Render Gifs
     for (var i = 0; i < standardGiphyResponse.length; ++i) {
+        var link = $('<a>');
+        link.attr('href', standardGiphyResponse[i].url);
         var gif = $('<img>');
         gif.addClass('result-gif');
         gif.attr('src', standardGiphyResponse[i].images.fixed_height.url);
-        gif.attr('alt', `Result ${i}`);
-        content.append(gif);
+        gif.attr('alt', standardGiphyResponse[i].title);
+        link.append(gif);
+        content.append(link);
     }
 
     for (var i = 0; i < altGiphyResponses.length; ++i) {
         if (altGiphyResponses[i]) {
+            var link = $('<a>');
+            link.attr('href', altGiphyResponses[i].url);
             var gif = $('<img>');
             gif.addClass('result-gif');
-            gif.attr('src', altGiphyResponses[i].fixed_height.url);
-            gif.attr('alt', `Result ${i}`);
-            content.append(gif);
+            console.log(altGiphyResponses[i]);
+            gif.attr('src', altGiphyResponses[i].images.fixed_height.url);
+            gif.attr('alt', altGiphyResponses[i].title);
+            link.append(gif);
+            content.append(link);
         }
     }
 
@@ -136,7 +132,6 @@ async function searchGifs() {
         'response': standardGiphyResponse[0].images.fixed_height_small_still.url
     }
     var list = JSON.parse(localStorage.getItem("PastGiphyResponses"));
-    console.log(list);
     if (!list) {
         list = [];
     } else {
@@ -182,7 +177,6 @@ async function getSimilarWords(input) {
             return null;
         })
         .then(function (data) {
-            console.log(data);
             return data;
         });
     return result;
