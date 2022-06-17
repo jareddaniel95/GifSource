@@ -124,7 +124,7 @@ function addHistoryItem(pastResponse) {
     var newCol = $('<div>');
     newCol.addClass("col");
     newCol.attr("class", "border custom-border m-2");
-    newCol.attr("style", `width: 200px; height: 200px; display: flex; background-image: url(${pastResponse.response}); background-repeat: no-repeat; background-size: 100% 100%;`);
+    newCol.attr("style", `width: 200px; height: 175px; display: flex; background-image: url(${pastResponse.response}); background-repeat: no-repeat; background-size: 100% 100%;`);
     var historyName = $('<h2>');
     historyName.attr("class", "text-center mb-0 historyHeader");
     historyName.attr("style", "align-self: flex-end; width: 100%;");
