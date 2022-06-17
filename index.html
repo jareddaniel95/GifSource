@@ -28,12 +28,12 @@
           <button id="search" class="btn btn-default w-50">Search</button>
         </div>
       </div>
-      <div class="row mt-3 justify-content-center" id="historyTitle"><h2 id="recent-searches-h" style="display:none">Recent Searches</h2></div>
+      <div class="row mt-3 justify-content-center" id="historyTitle"><h2 class="hide" id="recent-searches-h">Recent Searches</h2></div>
       <div class="row justify-content-center" id="historyItems"></div>
     </div>
-    <div style="margin-left: 0px auto; margin-right: 0px auto">
-      <object id="loading-icon" data="./assets/images/loading.svg" type="image/svg+xml" style="margin-left:auto; margin-right:auto; display:none"></object>
-      <h2 id="search-results-h" style="margin-left:auto; margin-right:auto; display:none">Search Results</h2>
+    <div>
+      <object id="loading-icon" class="center-element hide" data="./assets/images/loading.svg" type="image/svg+xml"></object>
+      <h2 id="search-results-h" class="center-element hide">Search Results</h2>
       <div id="content" class="w-100 p-1"></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>

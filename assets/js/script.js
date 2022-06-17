@@ -14,7 +14,7 @@ var searchResultsHeader = $('#search-results-h');
 
 var pastGiphyResponses = JSON.parse(localStorage.getItem("PastGiphyResponses"));
 if (pastGiphyResponses) {
-    recentSearchesHeader.attr('style', 'display:block');
+    recentSearchesHeader.removeClass('hide');
     pastGiphyResponses.forEach(pastResponse => {
         addHistoryItem(pastResponse);
     })
@@ -46,8 +46,8 @@ async function searchGifs() {
     }
 
     content.empty();
-    searchResultsHeader.attr('style', 'margin-left:auto; margin-right:auto; display:none');
-    loadingIcon.attr('style', 'margin-left:auto; margin-right:auto; display:block');
+    searchResultsHeader.addClass('hide');
+    loadingIcon.removeClass('hide');
 
     // Get GIFs
     var inputWords = searchField.val().split(' ');
@@ -108,9 +108,8 @@ async function searchGifs() {
         console.log("Nothing here");
     }
     console.log(altGiphyResponses);
-    // content.empty();
-    loadingIcon.attr('style', 'margin-left: auto; margin-right: auto; display:none');
-    searchResultsHeader.attr('style', 'margin-left:auto; margin-right:auto; display:block');
+    loadingIcon.addClass('hide');
+    searchResultsHeader.removeClass('hide');
 
     // Render Gifs
     for (var i = 0; i < standardGiphyResponse.length; ++i) {
@@ -150,7 +149,7 @@ async function searchGifs() {
     }
     list.push(searchObj);
     localStorage.setItem("PastGiphyResponses", JSON.stringify(list));
-    recentSearchesHeader.attr('style', 'display:block');
+    recentSearchesHeader.removeClass('hide');
     addHistoryItem(searchObj);
 }
 
