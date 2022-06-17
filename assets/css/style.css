@@ -9,3 +9,24 @@ header {
 .history-button {
     background-color: blueviolet;
 }
+
+h2 {
+    color: silver;
+}
+
+img {
+    width: 200px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.custom-border {
+    border-radius: 10px;
+}
+
+.historyHeader {
+    background-color: blueviolet;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-top: 1px solid white;
+}

@@ -7,18 +7,26 @@ var content = $('#content');
 var searchField = $('input[name="input"]');
 var buttonSearch = $('#search');
 var searchBox = $('#searchbox');
+var historyItems = $('#historyItems');
 
 var pastGiphyResponses = JSON.parse(localStorage.getItem("PastGiphyResponses"));
     if (pastGiphyResponses) {
         pastGiphyResponses.forEach(pastResponse => {
+            var newCol = $('<div>');
+            newCol.addClass("col");
             var historyItem = $('<div>');
+            historyItem.attr("class", "border custom-border");
+            historyItem.attr("style", "max-width: 202px");
             var historyName = $('<h2>');
+            historyName.attr("class", "text-center mb-0 historyHeader");
             historyName.text(pastResponse.searchValue);
             var historyImg = $('<img>');
             historyImg.attr('src', pastResponse.response);
             historyItem.append(historyImg);
             historyItem.append(historyName);
-            searchBox.append(historyItem);
+            // searchBox.append(historyItem);
+            newCol.append(historyItem);
+            historyItems.append(newCol);
         })
     }
 
@@ -111,7 +119,7 @@ buttonSearch.on('click', async function() {
     // Save to local storage
     var searchObj = {
         'searchValue': searchField.val(),
-        'response': standardGiphyResponse[0].images.downsized.url
+        'response': standardGiphyResponse[0].images.fixed_height_small_still.url
     }
     var list = JSON.parse(localStorage.getItem("PastGiphyResponses"));
     if (!list) {
