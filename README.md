@@ -8,6 +8,11 @@ As a Gif user I want to find the perfect Gif to send to my friends and family. I
 
 ![Sample view.](./assets/images/sample.png)
 
+# Future Development Ideas
+* Show titles of Gif'sin Search Results.
+* Add a clickable share button feature.
+* Add to desktop clip board feature.
+* Feature that allows you to save your Favotite Gif's to a user profile.
 
 ## Deployment
 ---
